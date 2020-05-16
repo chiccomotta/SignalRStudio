@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using SignalRChat.Hub;
+using System;
 
 namespace SignalRChat
 {
@@ -31,13 +28,12 @@ namespace SignalRChat
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSignalR();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -48,13 +44,16 @@ namespace SignalRChat
                 app.UseExceptionHandler("/Error");
             }
 
+            app.UseRouting();
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseSignalR(routes =>
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapHub<ChatHub>("/chatHub");
+                endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
-            app.UseMvc();
         }
     }
 }

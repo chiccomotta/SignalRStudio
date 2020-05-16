@@ -7,7 +7,7 @@ namespace SignalRChat.Pages
 {
     public class IndexModel : PageModel
     {
-        public string User { get; set; }
+        public string UserName { get; set; }
 
         private readonly IHubContext<ChatHub> hubContext;
         public IndexModel(IHubContext<ChatHub> _hubContext)
@@ -17,7 +17,7 @@ namespace SignalRChat.Pages
 
         public void OnGet([FromQuery] string user)
         {
-            this.User = user;
+            this.UserName = user;
         }
 
         public async void OnPostAddNewAction(string action)
