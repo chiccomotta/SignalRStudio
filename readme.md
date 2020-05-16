@@ -1,1 +1,1 @@
-# Technology Research
+# SignalR project for studying purpose
