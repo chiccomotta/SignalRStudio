@@ -1,4 +1,4 @@
-﻿"use strict";
+﻿//"use strict";
 var user = 'no user';
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub?user=" + user).build();
  
@@ -6,9 +6,8 @@ connection.on("NotifyActionAdded",
     function(user, action) {
 
         // TODO: fare chiamata ajax per vedere se ci sono nuove actions da processare
-        console.log("User: " + user);
-        console.log("Action: " + action);
-        
+        $('#messagesList').append('<li>' + user + ' action: ' + action + '</li>');
+
         // remove handler
         //connection.off("NotifyAddAction");
     });
