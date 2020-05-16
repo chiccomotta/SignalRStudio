@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.SignalR;
 using SignalRChat.Hub;
 
@@ -19,9 +14,12 @@ namespace SignalRChat.Pages
 
         public void OnGet()
         {
-            // Invoke method on client
+        }
 
-            var connId = hubContext.Clients.All.SendAsync("SendMessage", "pippo", "Hello");
+        public async void OnPostAddNewAction(string action)
+        {
+            // ...add action in db and notify all clients
+            await hubContext.Clients.All.SendAsync("NotifyActionAdded", "chicco", "call hospital");
         }
     }
 }

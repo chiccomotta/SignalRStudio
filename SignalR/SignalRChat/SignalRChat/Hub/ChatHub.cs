@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace SignalRChat.Hub
 {
@@ -18,8 +14,6 @@ namespace SignalRChat.Hub
         public async Task AddAction(string user, string action)
         {
             var id = Context.ConnectionId;
-
-            //await Clients.All.SendAsync("ReceiveMessage", user, id);
             await Clients.All.SendAsync("NotifyActionAdded", user, action);
         }
 
